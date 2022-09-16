@@ -8,9 +8,29 @@ function App() {
 
   const[search, setSearch]=useState("")
   const[fetchdata, setfetchData]=useState([])
+  // const[checked, setChecked]=useState(false)
+  const[gender,setGender]=useState()
+  const[status, setStatus]=useState("all")
 
   const searchName = (allusers) => {
-    return allusers.filter(user => user.name.toLocaleLowerCase().includes(search))
+    // if(checked === true){
+    //   allusers = allusers.filter((user) =>  user.gender === "female")
+    // }
+    if(gender === "female"){
+      allusers = allusers.filter((user) =>  user.gender === "female")
+      }
+    else if(gender === "male"){
+      allusers = allusers.filter((user) =>  user.gender === "male")
+    }
+    if(status === "active"){
+      debugger
+      allusers = allusers.filter((user) =>  user.status === "active")
+      }
+    else if(status === "inactive"){
+      debugger
+      allusers = allusers.filter((user) =>  user.status === "inactive")
+    }    
+    return allusers.filter((user) => user.name.toLocaleLowerCase().includes(search))  
   }
 
   useEffect(() =>{
@@ -26,7 +46,31 @@ function App() {
              placeholder="Search here" 
              className="search" 
              onChange={(e) => setSearch(e.target.value)}
-      />
+      /><br/>
+       <div>
+          <label>Filter By Gender</label>
+          <input type="radio" name="gender" value="all" defaultChecked onChange={(e) => setGender(e.target.value)} />
+          All Users
+          <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)} />
+          Male
+          <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)}/>
+          Female
+        </div>
+      {/* <label>
+        <input type="checkbox"
+               defaultChecked={checked}
+               onChange={() => setChecked(!checked)}
+        />
+        Female
+      </label> */}
+      <div>
+        <label>Filter By Status </label>
+        <select name="status">
+          <option value="all" onChange={(e) => setStatus(e.target.value)}>All</option>
+          <option value="active" onChange={(e) => setStatus(e.target.value)}>Active</option>
+          <option value="inactive" onChange={(e) => setStatus(e.target.value)}>Inactive</option>
+        </select>
+      </div>
       <Table dataprops={searchName(fetchdata)}/>
     </div>
   );
