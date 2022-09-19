@@ -9,27 +9,34 @@ function App() {
   const[search, setSearch]=useState("")
   const[fetchdata, setfetchData]=useState([])
   // const[checked, setChecked]=useState(false)
-  const[gender,setGender]=useState()
+  const[gender,setGender]=useState("all")
   const[status, setStatus]=useState("all")
+
+  const userGender = ["all", "male", "female"]
+  const userStatus = ["all", "active", "inactive"]
 
   const searchName = (allusers) => {
     // if(checked === true){
     //   allusers = allusers.filter((user) =>  user.gender === "female")
     // }
-    if(gender === "female"){
-      allusers = allusers.filter((user) =>  user.gender === "female")
-      }
-    else if(gender === "male"){
-      allusers = allusers.filter((user) =>  user.gender === "male")
+    
+
+    if(gender === userGender[0]){
+      allusers = allusers
     }
-    if(status === "active"){
-      debugger
-      allusers = allusers.filter((user) =>  user.status === "active")
-      }
-    else if(status === "inactive"){
-      debugger
-      allusers = allusers.filter((user) =>  user.status === "inactive")
-    }    
+    else{
+      allusers = allusers.filter((user) =>  user.gender === gender)
+    }
+    
+
+    if(status === userStatus[0]){
+      allusers = allusers
+    }
+    else{
+      allusers = allusers.filter((user) =>  user.status === status)
+    }
+    
+      
     return allusers.filter((user) => user.name.toLocaleLowerCase().includes(search))  
   }
 
@@ -49,11 +56,11 @@ function App() {
       /><br/>
        <div>
           <label>Filter By Gender</label>
-          <input type="radio" name="gender" value="all" defaultChecked onChange={(e) => setGender(e.target.value)} />
+          <input type="radio" name="gender" value={userGender[0]} defaultChecked onChange={(e) => setGender(e.target.value)} />
           All Users
-          <input type="radio" name="gender" value="male" onChange={(e) => setGender(e.target.value)} />
+          <input type="radio" name="gender" value={userGender[1]} onChange={(e) => setGender(e.target.value)} />
           Male
-          <input type="radio" name="gender" value="female" onChange={(e) => setGender(e.target.value)}/>
+          <input type="radio" name="gender" value={userGender[2]} onChange={(e) => setGender(e.target.value)}/>
           Female
         </div>
       {/* <label>
@@ -66,9 +73,9 @@ function App() {
       <div>
         <label>Filter By Status </label>
         <select onClick={(e) => setStatus(e.target.value)}>
-          <option value="all">All</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value={userStatus[0]}>All</option>
+          <option value={userStatus[1]}>Active</option>
+          <option value={userStatus[2]}>Inactive</option>
         </select>
       </div>
       <Table dataprops={searchName(fetchdata)}/>
