@@ -65,10 +65,10 @@ function App() {
       </label> */}
       <div>
         <label>Filter By Status </label>
-        <select name="status">
-          <option value="all" onChange={(e) => setStatus(e.target.value)}>All</option>
-          <option value="active" onChange={(e) => setStatus(e.target.value)}>Active</option>
-          <option value="inactive" onChange={(e) => setStatus(e.target.value)}>Inactive</option>
+        <select onClick={(e) => setStatus(e.target.value)}>
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
         </select>
       </div>
       <Table dataprops={searchName(fetchdata)}/>
